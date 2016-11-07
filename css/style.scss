@@ -1,0 +1,182 @@
+.main {
+    font-family: helvetica;
+    color: #666;
+}
+
+.content {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 30%;
+    bottom: 0;
+    padding: 4% 0 0 4%;
+    width: 70%;
+
+    @media (min-width: 720px) {
+        width: 92%;
+        left: 15%;
+    }
+}
+
+.about {
+    width: 50%;
+}
+
+.nav {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 8%;
+    padding: 0 0 0 1%;
+
+    .navLinks {
+        list-style: none;
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+
+        li {
+            position: relative;
+            padding: .2em;
+            
+            &::after {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                content: " ";
+                background: transparent;
+                width: 0px;
+                height: 1px;
+            }
+
+            &.active {
+                &:after {
+                    background: #666;
+                    width: 100px;
+                    transition: all .5s ;
+                }
+            }
+        }
+    }
+}
+
+.thumbGrid {
+    margin: 0;
+    padding: 0;
+
+    .fullImage {
+        position: fixed;
+        top: 0;
+        left:0;
+        bottom: 0;
+        right: 0;
+        background: rgba(0,0,0,.8);
+        z-index: 2;
+
+        img {
+
+            &.active {
+                position: absolute;
+                max-width: 70%;
+                max-height: 80vh;
+                top: 50%;
+                left: 50%;
+                transform: translateY(-50%) translateX(-50%);
+            }
+        }
+    }
+
+    %slideButton {
+        cursor: pointer;
+        position: absolute;
+        padding: 1em;
+        top: 80%;
+        transform: translateY(-50%);
+        color: #ddd;
+    }
+
+    .prev {
+        @extend %slideButton;
+        left: 0;
+    }
+
+    .next {
+        @extend %slideButton;
+        right: 0;
+    }
+
+    .change-appear {
+        opacity: 0.7;
+    }
+
+    .change-appear.change-appear-active {
+        opacity: 1;
+        transition: all 50ms ease-in;
+    }
+
+    .change-leave {
+        opacity: 1;
+    }
+
+    .change-leave.change-leave-active {
+        opacity: 0;
+        transition: all 500ms ease-in;
+    }
+
+    .expand-appear {
+        opacity: 0.01;
+    }
+
+    .expand-appear.expand-appear-active {
+        opacity: 1;
+        transition: all 500ms ease-in;
+    }
+
+    @media (min-width: 720px) {
+        %slideButton {
+            top: 50%;
+        }
+    }
+}
+
+.article {
+    box-sizing: border-box;
+    float: left;
+    padding: .2%;
+    text-align: center;
+    width: 45%;
+    transition: all .2s;
+    clear: right;
+
+    img {
+        max-width: 100%;
+    }
+
+    .fullImage {
+        position: fixed;
+        top: 0;
+        left:0;
+        bottom: 0;
+        right: 0;
+        background: rgba(0,0,0,.8);
+        z-index: 2;
+
+        img {
+
+            &.active {
+                position: absolute;
+                max-width: 70%;
+                max-height: 80vh;
+                top: 50%;
+                left: 50%;
+                transform: translateY(-50%) translateX(-50%);
+            }
+        }
+    }
+
+    @media (min-width: 720px) {
+        width: 30%;
+    }
+}
