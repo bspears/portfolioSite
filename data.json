@@ -1,47 +1,47 @@
 {
     "photos": [ 
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/rupert.jpg",
+            "imgUrl": "images/rupert.jpg",
             "type": "portrait"
         },
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/ricky.jpg",
+            "imgUrl": "images/ricky.jpg",
             "type": "portrait"
         },
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/boats.jpg",
+            "imgUrl": "images/boats.jpg",
             "type": "other"
         },
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/michelle.jpg",
+            "imgUrl": "images/michelle.jpg",
             "type": "portrait"
         },
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/sam.jpg",
+            "imgUrl": "images/sam.jpg",
             "type": "other"
         },
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/pasta-girl.jpg",
+            "imgUrl": "images/pasta-girl.jpg",
             "type": "portrait"
         },
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/cam2.jpg",
+            "imgUrl": "images/cam2.jpg",
             "type": "portrait"
         },
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/street-musician.jpg",
+            "imgUrl": "images/street-musician.jpg",
             "type": "portrait"
         },
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/balloon-man.jpg",
+            "imgUrl": "images/balloon-man.jpg",
             "type": "portrait"
         },
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/view-from-the-top.jpg",
+            "imgUrl": "images/view-from-the-top.jpg",
             "type": "other"
         },
         {
-            "imgUrl": "http://bennettspears.herokuapp.com/images/fish-man.jpg",
+            "imgUrl": "images/fish-man.jpg",
             "type": "portrait"
         }
     ]
