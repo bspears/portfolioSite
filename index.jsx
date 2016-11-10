@@ -3,16 +3,20 @@ import ReactDOM from "react-dom";
 import Nav from "./Nav.jsx";
 import About from "./About.jsx";
 import ThumbGrid from "./ThumbGrid.jsx";
-
+import Article from "./Article.jsx";
 
 export default React.createClass({
+    proptypes: {
+        photos: React.PropTypes.string
+    },
+
     getInitialState() {
         return {
             showPortraits: true,
             showOther: true,
             showSlide: false,
-            photoIndex: null,
-            view: "photos"
+            photoIndex: 0,
+            view: "photos",
         }
     },
 
@@ -40,49 +44,39 @@ export default React.createClass({
         }) 
     },
 
+    updatePhotoIndex(newIndex) {
+        this.setState({
+            photoIndex: newIndex
+        })
+    },
+
+    renderArticles() {
+        let articles = [];
+        let key = 0;
+
+        this.props.photos.map( photo => {
+            if( this.state.showPortraits && photo.type === "portrait" ||
+                this.state.showOther && photo.type === "other") {
+                articles.push(
+                    <Article imgUrl={photo.imgUrl} key={key} index={key} renderSlider={this.renderSlider}/>
+                );
+                key += 1;
+            }
+        });
+
+        return articles;
+    },
+
     renderSlider(img) {
-
         this.setState({
-            showSlide: true,
             photoIndex: img,
-            photo: this.props.photos[img].imgUrl
-        })
-    },
-
-    nextPhoto() {
-        let newIndex = this.state.photoIndex;
-        
-        if( newIndex < this.props.photos.length -1 ) {
-            newIndex += 1;
-        } else {
-            newIndex = 0;
-        }
-
-        this.setState({
-            photoIndex: newIndex,
-            photo: this.props.photos[newIndex].imgUrl
-        })
-    },
-
-    prevPhoto() {
-        let newIndex = this.state.photoIndex;
-        
-        if( newIndex > 0 ) {
-            newIndex -= 1;
-        } else {
-            newIndex = this.props.photos.length -1;
-        }
-
-        this.setState({
-            photoIndex: newIndex,
-            photo: this.props.photos[newIndex].imgUrl
+            showSlide: true,
         })
     },
 
     closeSlider() {
         this.setState({
             showSlide: false,
-            photo: null
         })
     },
 
@@ -95,6 +89,9 @@ export default React.createClass({
     },
 
     render() {
+
+        const thumbs = this.renderArticles();
+
         return (
             <div className="main">
                 <Nav 
@@ -107,7 +104,14 @@ export default React.createClass({
                     view={this.state.view}
                 />
                 <section className="content">
-                    {this.state.view === "photos" && <ThumbGrid {...this.state} photos={this.props.photos} renderSlider={this.renderSlider} nextPhoto={this.nextPhoto} prevPhoto={this.prevPhoto} closeSlider={this.closeSlider}/>}
+                    {this.state.view === "photos" && <ThumbGrid {...this.state} 
+                        thumbs={thumbs}
+                        updatePhotoIndex={this.updatePhotoIndex}
+                        renderSlider={this.renderSlider}
+                        photoIndex={this.state.photoIndex}
+                        nextPhoto={this.nextPhoto} 
+                        prevPhoto={this.prevPhoto} 
+                        closeSlider={this.closeSlider}/>}
                     {this.state.view === "about" && <About />}
                 </section>
             </div>

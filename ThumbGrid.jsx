@@ -6,25 +6,35 @@ import Slide from "./Slider.jsx"
 
 export default React.createClass({
 
-    renderArticles() {
-        let articles = [];
-        let key = 0;
+     nextPhoto() {
+        let newIndex = this.props.photoIndex;
+        
+        if( newIndex < this.props.thumbs.length -1 ) {
+            newIndex += 1;
+        } else {
+            newIndex = 0;
+        }
 
-        this.props.photos.map( photo => {
-            if( this.props.showPortraits && photo.type === "portrait" ||
-                this.props.showOther && photo.type === "other") {
-                articles.push(
-                    <Article imgUrl={photo.imgUrl} key={key} index={key} renderSlider={this.props.renderSlider}/>
-                );
-                key += 1;
-            }
-        });
+        this.props.updatePhotoIndex(newIndex);
+    },
 
-        return articles;
+    prevPhoto() {
+        let newIndex = this.props.photoIndex;
+        
+        if( newIndex > 0 ) {
+            newIndex -= 1;
+        } else {
+            newIndex = this.props.thumbs.length -1;
+        }
+
+        this.props.updatePhotoIndex(newIndex);
     },
 
     render() {
-        const thumbs = this.renderArticles();
+        // const thumbs = this.renderArticles();
+        console.log(this.props.photoIndex)
+        const index = this.props.photoIndex;
+        const photo = this.props.thumbs[index].props.imgUrl;
        
         let masonryOptions = {
             transitionDuration: 0
@@ -39,8 +49,14 @@ export default React.createClass({
                 disableImagesLoaded={false}
                 updateOnEachImageLoad={false}
             >
-                {thumbs}
-                {this.props.showSlide ? <Slide photos={this.props.photos} photo={this.props.photo} nextPhoto={this.props.nextPhoto} prevPhoto={this.props.prevPhoto} closeSlider={this.props.closeSlider}/> : ""}
+                {this.props.thumbs}
+                {this.props.showSlide ? 
+                    <Slide 
+                        photos={this.props.thumbs} 
+                        photo={photo} 
+                        nextPhoto={this.nextPhoto} 
+                        prevPhoto={this.prevPhoto} 
+                        closeSlider={this.props.closeSlider}/> : ""}
             </Masonry>
         );
     }

@@ -21825,16 +21825,25 @@
 
 	var _ThumbGrid2 = _interopRequireDefault(_ThumbGrid);
 
+	var _Article = __webpack_require__(181);
+
+	var _Article2 = _interopRequireDefault(_Article);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createClass({
 	    displayName: "newthing",
+
+	    proptypes: {
+	        photos: _react2.default.PropTypes.string
+	    },
+
 	    getInitialState: function getInitialState() {
 	        return {
 	            showPortraits: true,
 	            showOther: true,
 	            showSlide: false,
-	            photoIndex: null,
+	            photoIndex: 0,
 	            view: "photos"
 	        };
 	    },
@@ -21859,18 +21868,34 @@
 	            showOther: true
 	        });
 	    },
+	    renderArticles: function renderArticles() {
+	        var _this = this;
+
+	        console.log(this.props.photos);
+	        var articles = [];
+	        var key = 0;
+
+	        this.props.photos.map(function (photo) {
+	            if (_this.state.showPortraits && photo.type === "portrait" || _this.state.showOther && photo.type === "other") {
+	                articles.push(_react2.default.createElement(_Article2.default, { imgUrl: photo.imgUrl, key: key, index: key, renderSlider: _this.props.renderSlider }));
+	                key += 1;
+	            }
+	        });
+
+	        return articles;
+	    },
 	    renderSlider: function renderSlider(img) {
 
 	        this.setState({
-	            showSlide: true,
 	            photoIndex: img,
+	            showSlide: true,
 	            photo: this.props.photos[img].imgUrl
 	        });
 	    },
 	    nextPhoto: function nextPhoto() {
 	        var newIndex = this.state.photoIndex;
 
-	        if (newIndex < this.props.photos.length - 1) {
+	        if (newIndex <= this.props.photos.length - 1) {
 	            newIndex += 1;
 	        } else {
 	            newIndex = 0;
@@ -21884,7 +21909,7 @@
 	    prevPhoto: function prevPhoto() {
 	        var newIndex = this.state.photoIndex;
 
-	        if (newIndex > 0) {
+	        if (newIndex >= 0) {
 	            newIndex -= 1;
 	        } else {
 	            newIndex = this.props.photos.length - 1;
@@ -21909,6 +21934,9 @@
 	        });
 	    },
 	    render: function render() {
+
+	        var thumbs = this.renderArticles();
+
 	        return _react2.default.createElement(
 	            "div",
 	            { className: "main" },
@@ -21924,7 +21952,12 @@
 	            _react2.default.createElement(
 	                "section",
 	                { className: "content" },
-	                this.state.view === "photos" && _react2.default.createElement(_ThumbGrid2.default, _extends({}, this.state, { photos: this.props.photos, renderSlider: this.renderSlider, nextPhoto: this.nextPhoto, prevPhoto: this.prevPhoto, closeSlider: this.closeSlider })),
+	                this.state.view === "photos" && _react2.default.createElement(_ThumbGrid2.default, _extends({}, this.state, {
+	                    thumbs: thumbs,
+	                    renderSlider: this.renderSlider,
+	                    nextPhoto: this.nextPhoto,
+	                    prevPhoto: this.prevPhoto,
+	                    closeSlider: this.closeSlider })),
 	                this.state.view === "about" && _react2.default.createElement(_About2.default, null)
 	            )
 	        );
@@ -22151,6 +22184,7 @@
 	    },
 	    render: function render() {
 	        var thumbs = this.renderArticles();
+	        var photo = thumbs[this.props.photoIndex].props.imgUrl;
 
 	        var masonryOptions = {
 	            transitionDuration: 0
@@ -22166,8 +22200,13 @@
 	                disableImagesLoaded: false,
 	                updateOnEachImageLoad: false
 	            },
-	            thumbs,
-	            this.props.showSlide ? _react2.default.createElement(_Slider2.default, { photos: this.props.photos, photo: this.props.photo, nextPhoto: this.props.nextPhoto, prevPhoto: this.props.prevPhoto, closeSlider: this.props.closeSlider }) : ""
+	            this.props.thumbs,
+	            this.props.showSlide ? _react2.default.createElement(_Slider2.default, {
+	                photos: thumbs,
+	                photo: photo,
+	                nextPhoto: this.props.nextPhoto,
+	                prevPhoto: this.props.prevPhoto,
+	                closeSlider: this.props.closeSlider }) : ""
 	        );
 	    }
 	});
